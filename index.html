@@ -160,104 +160,479 @@
             transform: translateY(-2px);
         }
 
-        /* Auth Forms */
+        /* Modern Auth Forms */
+        .auth-modal {
+            max-width: 480px;
+            width: 90%;
+            padding: 0;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
         .auth-form {
+            padding: 2.5rem;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .auth-form.hidden {
+            transform: translateX(100%);
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .user-profile {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .user-profile.hidden {
+            transform: translateX(100%);
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .auth-header {
             text-align: center;
-        }
-
-        .auth-form h2 {
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .auth-form p {
-            color: #666;
             margin-bottom: 2rem;
         }
 
-        .auth-links {
-            margin-top: 1.5rem;
+        .auth-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .auth-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(-2px);
+        }
+
+        .auth-header {
+            position: relative;
+        }
+
+        .auth-form-content {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            color: #667eea;
+            font-size: 1.1rem;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #f8f9ff;
+            transition: all 0.3s ease;
+            text-indent: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-wrapper input::placeholder {
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        .input-wrapper:hover input {
+            border-color: #667eea;
+            background: white;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkmark {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #667eea;
+            border-radius: 4px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked+.checkmark {
+            background: #667eea;
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked+.checkmark::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .forgot-password {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .auth-submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .auth-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .auth-divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .auth-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e5e9;
+        }
+
+        .auth-divider span {
+            background: white;
+            padding: 0 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            padding: 0.8rem;
+            border: 2px solid #e1e5e9;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .social-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .google-btn {
+            color: #ea4335;
+        }
+
+        .github-btn {
+            color: #333;
+        }
+
+        .auth-footer {
+            text-align: center;
             padding-top: 1.5rem;
             border-top: 1px solid #e1e5e9;
         }
 
-        .auth-links a {
+        .auth-link {
             color: #667eea;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
         }
 
-        .auth-links a:hover {
+        .auth-link:hover {
             text-decoration: underline;
         }
 
-        /* User Profile */
+        .success,
+        .error {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .success {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .auth-submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .terms-link {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Modern User Profile */
         .user-profile {
+            padding: 2rem;
             text-align: left;
         }
 
         .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
             margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
+            padding-bottom: 2rem;
             border-bottom: 1px solid #e1e5e9;
         }
 
+        .profile-avatar-section {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-avatar {
+            position: relative;
+            display: inline-block;
+        }
+
         .profile-avatar img {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #667eea;
+            border: 4px solid #667eea;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .avatar-edit {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+
+        .avatar-edit:hover {
+            transform: scale(1.1);
         }
 
         .profile-info h3 {
-            margin: 0 0 0.5rem 0;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: #333;
+            margin: 0 0 0.5rem 0;
         }
 
         .profile-info p {
-            margin: 0 0 1rem 0;
             color: #666;
+            margin: 0 0 1.5rem 0;
+            font-size: 1rem;
         }
 
-        .profile-badges {
+        .profile-stats {
             display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+            gap: 2rem;
         }
 
-        .badge {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
             font-size: 0.8rem;
-            font-weight: 500;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .profile-tabs {
             display: flex;
-            gap: 0.5rem;
+            gap: 0;
             margin-bottom: 2rem;
-            border-bottom: 1px solid #e1e5e9;
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 0.5rem;
         }
 
         .tab-btn {
-            padding: 0.8rem 1.5rem;
+            flex: 1;
+            padding: 1rem 1.5rem;
             border: none;
             background: none;
             color: #666;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
+            border-radius: 8px;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
         }
 
         .tab-btn.active {
+            background: white;
             color: #667eea;
-            border-bottom-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(102, 126, 234, 0.05);
+            color: #667eea;
         }
 
         .tab-content {
@@ -268,9 +643,143 @@
             display: block;
         }
 
-        .tab-content h4 {
-            margin-bottom: 1rem;
+        .tab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .tab-header h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
             color: #333;
+            margin: 0;
+        }
+
+        .event-count,
+        .ticket-count,
+        .badge-count {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .content-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .event-item,
+        .ticket-item,
+        .badge-item {
+            background: #f8f9ff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .event-item:hover,
+        .ticket-item:hover,
+        .badge-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .event-item h5,
+        .ticket-item h5,
+        .badge-item h5 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .event-item p,
+        .ticket-item p,
+        .badge-item p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .badge-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .badge-item i {
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        .settings-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: #f8f9ff;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .setting-item:hover {
+            background: #f0f2ff;
+        }
+
+        .setting-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .setting-info i {
+            font-size: 1.2rem;
+            color: #667eea;
+            width: 24px;
+        }
+
+        .setting-info h5 {
+            margin: 0 0 0.2rem 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .setting-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .setting-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .setting-btn:hover {
+            transform: scale(1.1);
         }
 
         .logout-btn {
@@ -278,15 +787,55 @@
             color: white;
             border: none;
             padding: 1rem 2rem;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
         }
 
         .logout-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .auth-modal {
+                width: 95%;
+                margin: 1rem;
+            }
+
+            .auth-form {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-avatar-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .profile-stats {
+                justify-content: center;
+            }
+
+            .profile-tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                flex: none;
+                min-width: 120px;
+            }
         }
 
         /* Large Modal */
@@ -2489,106 +3038,290 @@
 
     <!-- Login/User Profile Modal -->
     <div id="loginModal" class="modal hidden">
-        <div class="modal-content">
+        <div class="modal-content auth-modal">
             <span class="close" onclick="closeLoginModal()">&times;</span>
+
+            <!-- Login Form -->
             <div id="loginForm" class="auth-form">
-                <h2><i class="fas fa-sign-in-alt"></i> Login to Your Account</h2>
-                <p>Access your registered events and manage your profile</p>
-                <form id="userLoginForm">
-                    <div class="form-group">
-                        <label for="loginEmail"><i class="fas fa-envelope"></i> Email Address</label>
-                        <input type="email" id="loginEmail" name="email" placeholder="Enter your email" required />
+                <div class="auth-header">
+                    <div class="auth-icon">
+                        <i class="fas fa-sign-in-alt"></i>
                     </div>
+                    <h2>Welcome Back!</h2>
+                    <p>Login to access your events and manage your profile</p>
+                </div>
+
+                <form id="userLoginForm" class="auth-form-content">
                     <div class="form-group">
-                        <label for="loginPassword"><i class="fas fa-lock"></i> Password</label>
-                        <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required />
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="loginEmail" name="email" placeholder="Enter your email address" required />
+                        </div>
                     </div>
-                    <button type="submit">
-                        <i class="fas fa-sign-in-alt"></i> Login
+
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required />
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" id="rememberMe" />
+                            <span class="checkmark"></span>
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login to Account</span>
                     </button>
                 </form>
-                <div class="auth-links">
-                    <p>Don't have an account? <a href="#" onclick="showRegisterForm()">Register here</a></p>
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="social-btn google-btn">
+                        <i class="fab fa-google"></i>
+                        Continue with Google
+                    </button>
+                    <button class="social-btn github-btn">
+                        <i class="fab fa-github"></i>
+                        Continue with GitHub
+                    </button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" onclick="showRegisterForm()" class="auth-link">Create one here</a></p>
                 </div>
             </div>
 
+            <!-- Register Form -->
             <div id="registerForm" class="auth-form hidden">
-                <h2><i class="fas fa-user-plus"></i> Create Account</h2>
-                <p>Join TechFest 2025 and start your journey</p>
-                <form id="userRegisterForm">
-                    <div class="form-group">
-                        <label for="regName"><i class="fas fa-user"></i> Full Name</label>
-                        <input type="text" id="regName" name="name" placeholder="Enter your full name" required />
+                <div class="auth-header">
+                    <button class="back-btn" onclick="showLoginForm()" title="Back to Login">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="auth-icon">
+                        <i class="fas fa-user-plus"></i>
                     </div>
-                    <div class="form-group">
-                        <label for="regEmail"><i class="fas fa-envelope"></i> Email Address</label>
-                        <input type="email" id="regEmail" name="email" placeholder="Enter your email" required />
+                    <h2>Join TechFest 2025</h2>
+                    <p>Create your account and start your tech journey</p>
+                </div>
+
+                <form id="userRegisterForm" class="auth-form-content">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" id="regName" name="name" placeholder="Full Name" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-phone input-icon"></i>
+                                <input type="tel" id="regPhone" name="phone" placeholder="Phone Number" />
+                            </div>
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="regPassword"><i class="fas fa-lock"></i> Password</label>
-                        <input type="password" id="regPassword" name="password" placeholder="Create a password" required />
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="regEmail" name="email" placeholder="Email Address" required />
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="regPhone"><i class="fas fa-phone"></i> Phone Number</label>
-                        <input type="tel" id="regPhone" name="phone" placeholder="Enter your phone number" />
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="regPassword" name="password" placeholder="Create Password" required />
+                        </div>
                     </div>
-                    <button type="submit">
-                        <i class="fas fa-user-plus"></i> Create Account
+
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="regConfirmPassword" name="confirmPassword" placeholder="Confirm Password" required />
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" id="agreeTerms" required />
+                            <span class="checkmark"></span>
+                            I agree to the <a href="#" class="terms-link">Terms & Conditions</a>
+                        </label>
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" id="newsletterOpt" />
+                            <span class="checkmark"></span>
+                            Subscribe to newsletter
+                        </label>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Create Account</span>
                     </button>
                 </form>
-                <div class="auth-links">
-                    <p>Already have an account? <a href="#" onclick="showLoginForm()">Login here</a></p>
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="social-btn google-btn">
+                        <i class="fab fa-google"></i>
+                        Sign up with Google
+                    </button>
+                    <button class="social-btn github-btn">
+                        <i class="fab fa-github"></i>
+                        Sign up with GitHub
+                    </button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" onclick="showLoginForm()" class="auth-link">Login here</a></p>
                 </div>
             </div>
 
+            <!-- User Profile -->
             <div id="userProfile" class="user-profile hidden">
                 <div class="profile-header">
-                    <div class="profile-avatar">
-                        <img id="userAvatar" src="https://via.placeholder.com/80/667eea/ffffff?text=U" alt="User Avatar" />
-                    </div>
-                    <div class="profile-info">
-                        <h3 id="userName">User Name</h3>
-                        <p id="userEmail">user@example.com</p>
-                        <div class="profile-badges">
-                            <span class="badge"><i class="fas fa-trophy"></i> 3 Events</span>
-                            <span class="badge"><i class="fas fa-star"></i> Gold Member</span>
+                    <button class="back-btn" onclick="showLoginForm()" title="Back to Login">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="profile-avatar-section">
+                        <div class="profile-avatar">
+                            <img id="userAvatar" src="https://via.placeholder.com/100/667eea/ffffff?text=U" alt="User Avatar" />
+                            <div class="avatar-edit">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="userName">User Name</h3>
+                            <p id="userEmail">user@example.com</p>
+                            <div class="profile-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">3</span>
+                                    <span class="stat-label">Events</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">5</span>
+                                    <span class="stat-label">Badges</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">Gold</span>
+                                    <span class="stat-label">Member</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="profile-tabs">
-                    <button class="tab-btn active" onclick="showTab('myEvents')">My Events</button>
-                    <button class="tab-btn" onclick="showTab('myTickets')">My Tickets</button>
-                    <button class="tab-btn" onclick="showTab('myBadges')">My Badges</button>
-                    <button class="tab-btn" onclick="showTab('settings')">Settings</button>
+                    <button class="tab-btn active" onclick="showTab('myEvents')">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>My Events</span>
+                    </button>
+                    <button class="tab-btn" onclick="showTab('myTickets')">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>My Tickets</span>
+                    </button>
+                    <button class="tab-btn" onclick="showTab('myBadges')">
+                        <i class="fas fa-trophy"></i>
+                        <span>My Badges</span>
+                    </button>
+                    <button class="tab-btn" onclick="showTab('settings')">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </button>
                 </div>
 
                 <div id="myEvents" class="tab-content active">
-                    <h4>My Registered Events</h4>
-                    <div id="userEventsList">
+                    <div class="tab-header">
+                        <h4>My Registered Events</h4>
+                        <span class="event-count">3 events</span>
+                    </div>
+                    <div id="userEventsList" class="content-list">
                         <!-- User events will be populated here -->
                     </div>
                 </div>
 
                 <div id="myTickets" class="tab-content">
-                    <h4>My Tickets</h4>
-                    <div id="userTicketsList">
+                    <div class="tab-header">
+                        <h4>My Tickets</h4>
+                        <span class="ticket-count">5 tickets</span>
+                    </div>
+                    <div id="userTicketsList" class="content-list">
                         <!-- User tickets will be populated here -->
                     </div>
                 </div>
 
                 <div id="myBadges" class="tab-content">
-                    <h4>My Achievement Badges</h4>
-                    <div id="userBadgesList">
+                    <div class="tab-header">
+                        <h4>My Achievement Badges</h4>
+                        <span class="badge-count">5 badges</span>
+                    </div>
+                    <div id="userBadgesList" class="content-list">
                         <!-- User badges will be populated here -->
                     </div>
                 </div>
 
                 <div id="settings" class="tab-content">
-                    <h4>Account Settings</h4>
-                    <button onclick="logout()" class="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
+                    <div class="tab-header">
+                        <h4>Account Settings</h4>
+                    </div>
+                    <div class="settings-content">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <i class="fas fa-user"></i>
+                                <div>
+                                    <h5>Edit Profile</h5>
+                                    <p>Update your personal information</p>
+                                </div>
+                            </div>
+                            <button class="setting-btn">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <i class="fas fa-bell"></i>
+                                <div>
+                                    <h5>Notifications</h5>
+                                    <p>Manage your notification preferences</p>
+                                </div>
+                            </div>
+                            <button class="setting-btn">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <i class="fas fa-shield-alt"></i>
+                                <div>
+                                    <h5>Privacy & Security</h5>
+                                    <p>Manage your account security</p>
+                                </div>
+                            </div>
+                            <button class="setting-btn">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+
+                        <button onclick="logout()" class="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -3186,35 +3919,82 @@
         });
 
         function showLoginForm() {
-            document.getElementById('loginModal').classList.remove('hidden');
-            document.getElementById('loginForm').classList.remove('hidden');
-            document.getElementById('registerForm').classList.add('hidden');
-            document.getElementById('userProfile').classList.add('hidden');
+            const modal = document.getElementById('loginModal');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const userProfile = document.getElementById('userProfile');
+
+            modal.classList.remove('hidden');
+
+            // Smooth transition to login form
+            setTimeout(() => {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                userProfile.classList.add('hidden');
+            }, 100);
         }
 
         function showRegisterForm() {
-            document.getElementById('loginForm').classList.add('hidden');
-            document.getElementById('registerForm').classList.remove('hidden');
-            document.getElementById('userProfile').classList.add('hidden');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const userProfile = document.getElementById('userProfile');
+
+            // Smooth transition to register form
+            loginForm.classList.add('hidden');
+            userProfile.classList.add('hidden');
+
+            setTimeout(() => {
+                registerForm.classList.remove('hidden');
+            }, 200);
         }
 
         function showUserProfile() {
-            document.getElementById('loginModal').classList.remove('hidden');
-            document.getElementById('loginForm').classList.add('hidden');
-            document.getElementById('registerForm').classList.add('hidden');
-            document.getElementById('userProfile').classList.remove('hidden');
+            const modal = document.getElementById('loginModal');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const userProfile = document.getElementById('userProfile');
+
+            modal.classList.remove('hidden');
 
             // Update profile info
             document.getElementById('userName').textContent = currentUser.name;
             document.getElementById('userEmail').textContent = currentUser.email;
             document.getElementById('userAvatar').src = `https://via.placeholder.com/80/667eea/ffffff?text=${currentUser.name.charAt(0).toUpperCase()}`;
 
-            loadUserContent();
+            // Smooth transition to profile
+            loginForm.classList.add('hidden');
+            registerForm.classList.add('hidden');
+
+            setTimeout(() => {
+                userProfile.classList.remove('hidden');
+                loadUserContent();
+            }, 200);
         }
 
         function closeLoginModal() {
-            document.getElementById('loginModal').classList.add('hidden');
-            document.getElementById('authStatusMsg').innerText = '';
+            const modal = document.getElementById('loginModal');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const userProfile = document.getElementById('userProfile');
+
+            // Smooth close with fade out
+            modal.style.opacity = '0';
+            modal.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.opacity = '';
+                modal.style.transform = '';
+
+                // Reset all forms to initial state
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                userProfile.classList.add('hidden');
+
+                // Clear any status messages
+                const statusMsg = document.getElementById('authStatusMsg');
+                if (statusMsg) statusMsg.innerText = '';
+            }, 300);
         }
 
         function updateLoginButton() {
@@ -3230,6 +4010,13 @@
         // User registration
         document.getElementById('userRegisterForm').addEventListener('submit', function(e) {
             e.preventDefault();
+
+            // Show loading state
+            const submitBtn = this.querySelector('.auth-submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+            submitBtn.disabled = true;
+
             const userData = {
                 name: this.name.value,
                 email: this.email.value,
@@ -3238,51 +4025,101 @@
                 id: Date.now()
             };
 
-            // Save user data
-            currentUser = userData;
-            localStorage.setItem('currentUser', JSON.stringify(userData));
-
-            document.getElementById('authStatusMsg').innerHTML = `
-        <div class="success">
-          <i class="fas fa-check-circle"></i> Account created successfully!
-        </div>`;
-
-            updateLoginButton();
+            // Simulate API call
             setTimeout(() => {
-                showUserProfile();
-            }, 1500);
+                // Save user data
+                currentUser = userData;
+                localStorage.setItem('currentUser', JSON.stringify(userData));
+
+                // Show success message
+                const statusMsg = document.getElementById('authStatusMsg') || document.createElement('div');
+                statusMsg.id = 'authStatusMsg';
+                statusMsg.innerHTML = `
+                    <div class="success">
+                        <i class="fas fa-check-circle"></i> Account created successfully!
+                    </div>`;
+
+                if (!document.getElementById('authStatusMsg')) {
+                    this.appendChild(statusMsg);
+                }
+
+                updateLoginButton();
+
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+
+                // Transition to profile
+                setTimeout(() => {
+                    showUserProfile();
+                }, 1000);
+            }, 1000);
         });
 
         // User login
         document.getElementById('userLoginForm').addEventListener('submit', function(e) {
             e.preventDefault();
+
+            // Show loading state
+            const submitBtn = this.querySelector('.auth-submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+            submitBtn.disabled = true;
+
             const email = this.email.value;
             const password = this.password.value;
 
-            // Simple login validation (in real app, use proper authentication)
-            if (email && password) {
-                currentUser = {
-                    name: email.split('@')[0],
-                    email: email,
-                    id: Date.now()
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            // Simulate API call
+            setTimeout(() => {
+                // Simple login validation (in real app, use proper authentication)
+                if (email && password) {
+                    currentUser = {
+                        name: email.split('@')[0],
+                        email: email,
+                        id: Date.now()
+                    };
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-                document.getElementById('authStatusMsg').innerHTML = `
-          <div class="success">
-            <i class="fas fa-check-circle"></i> Login successful!
-          </div>`;
+                    // Show success message
+                    const statusMsg = document.getElementById('authStatusMsg') || document.createElement('div');
+                    statusMsg.id = 'authStatusMsg';
+                    statusMsg.innerHTML = `
+                        <div class="success">
+                            <i class="fas fa-check-circle"></i> Login successful!
+                        </div>`;
 
-                updateLoginButton();
-                setTimeout(() => {
-                    showUserProfile();
-                }, 1500);
-            } else {
-                document.getElementById('authStatusMsg').innerHTML = `
-          <div class="error">
-            <i class="fas fa-exclamation-circle"></i> Please enter valid credentials.
-          </div>`;
-            }
+                    if (!document.getElementById('authStatusMsg')) {
+                        this.appendChild(statusMsg);
+                    }
+
+                    updateLoginButton();
+
+                    // Reset button
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+
+                    // Transition to profile
+                    setTimeout(() => {
+                        showUserProfile();
+                    }, 1000);
+                } else {
+                    // Show error message
+                    const statusMsg = document.getElementById('authStatusMsg') || document.createElement('div');
+                    statusMsg.id = 'authStatusMsg';
+                    statusMsg.innerHTML = `
+                        <div class="error">
+                            <i class="fas fa-exclamation-circle"></i> Please enter valid credentials.
+                        </div>`;
+
+                    if (!document.getElementById('authStatusMsg')) {
+                        this.appendChild(statusMsg);
+                    }
+
+                    // Reset button
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            }, 1000);
         });
 
         function logout() {
