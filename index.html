@@ -1,0 +1,3683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechFest 2025 - The Ultimate Tech Experience</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle,
+        .newsletter-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .theme-toggle:hover,
+        .newsletter-btn:hover,
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        /* Countdown Timer Styles */
+        .countdown-timer {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .countdown-timer.urgent {
+            background: rgba(255, 107, 107, 0.9);
+            color: white;
+            animation: pulse 1s infinite;
+        }
+
+        /* Calendar Button */
+        .calendar-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calendar-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Auth Forms */
+        .auth-form {
+            text-align: center;
+        }
+
+        .auth-form h2 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .auth-form p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .auth-links {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e1e5e9;
+        }
+
+        .auth-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* User Profile */
+        .user-profile {
+            text-align: left;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .profile-avatar img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #667eea;
+        }
+
+        .profile-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+
+        .profile-info p {
+            margin: 0 0 1rem 0;
+            color: #666;
+        }
+
+        .profile-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .profile-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: none;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h4 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .logout-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Large Modal */
+        .large-modal {
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        /* Event Details */
+        .event-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .event-details img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .event-info h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .event-info p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .event-meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .meta-item {
+            background: #f8f9ff;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .meta-item i {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-item h4 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+
+        .meta-item p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Coupon Styles */
+        .coupon-applied {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .coupon-error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+        }
+
+        body.dark-mode .navbar {
+            background: rgba(26, 26, 46, 0.95);
+            color: #fff;
+        }
+
+        body.dark-mode .card {
+            background: #2a2a3e;
+            color: #fff;
+        }
+
+        body.dark-mode .search-box input {
+            background: #2a2a3e;
+            color: #fff;
+            border-color: #667eea;
+        }
+
+        body.dark-mode .stats {
+            background: #2a2a3e;
+        }
+
+        body.dark-mode .about {
+            background: #2a2a3e;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            padding: 2rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.1);
+        }
+
+        .stat-item i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Events Section */
+        .events {
+            padding: 5rem 2rem;
+            background: #f8f9ff;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .event-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Search and Filter Styles */
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 3rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 50px;
+            font-size: 1rem;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .clear-btn:hover {
+            color: #667eea;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced Card Styles */
+        .card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            right: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-badge {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .price-badge {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .card-features span {
+            background: #f8f9ff;
+            color: #667eea;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .register-btn {
+            flex: 2;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .details-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .details-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .ai-icon {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        }
+
+        .frontend-icon {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .blockchain-icon {
+            background: linear-gradient(45deg, #feca57, #ff9ff3);
+        }
+
+        .cyber-icon {
+            background: linear-gradient(45deg, #48dbfb, #0abde3);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .free-badge {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .card button {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .card button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        .about p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            padding: 2rem;
+            text-align: center;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Enhanced Footer */
+        .footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3,
+        .footer-section h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .footer-section p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            opacity: 0.9;
+        }
+
+        .footer-links a:hover {
+            color: #667eea;
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            margin: 0.5rem 0;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom strong {
+            color: #667eea;
+        }
+
+        /* Timeline Styles */
+        .schedule {
+            padding: 5rem 2rem;
+            background: #f8f9ff;
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-date {
+            width: 120px;
+            text-align: center;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            border-radius: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-date .day {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .timeline-date .month {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -20px;
+            border-left-color: white;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -20px;
+            border-right-color: white;
+            transform: translateY(-50%);
+        }
+
+        .timeline-content h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .timeline-content p {
+            color: #666;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .status-badge.available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.limited {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Stats Dashboard */
+        .stats-dashboard {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-info h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-info p {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .stat-progress {
+            margin-top: 1rem;
+            height: 6px;
+            background: #e1e5e9;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transition: width 0.5s ease;
+        }
+
+        .event-stats {
+            margin-top: 3rem;
+        }
+
+        .event-stats h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .event-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .event-stat-item {
+            background: #f8f9ff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .event-stat-item h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-stat-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Chatbot Styles */
+        .chatbot {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .chatbot-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 12px;
+            height: 12px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .chatbot-container {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chatbot-container.hidden {
+            display: none;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message i {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .message-content {
+            background: #f8f9ff;
+            padding: 0.8rem;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+
+        .user-message .message-content {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .quick-replies button {
+            background: white;
+            border: 1px solid #667eea;
+            color: #667eea;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-replies button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .chatbot-input {
+            padding: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            border-top: 1px solid #e1e5e9;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #e1e5e9;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chatbot-input button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive Timeline */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start;
+                margin-left: 40px;
+            }
+
+            .timeline-date {
+                width: 80px;
+                margin-bottom: 1rem;
+            }
+
+            .timeline-content {
+                margin: 0;
+                width: 100%;
+            }
+
+            .timeline-content::before {
+                display: none;
+            }
+
+            .chatbot-container {
+                width: 300px;
+                height: 400px;
+            }
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .modal-content .close:hover {
+            color: #667eea;
+        }
+
+        .modal.hidden {
+            display: none;
+        }
+
+        .modal h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .modal button[type="submit"] {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .modal button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        #statusMsg {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .event-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .event-stats-summary {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0 2.5rem 0;
+            font-size: 1.1rem;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .event-card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(102, 126, 234, 0.08);
+            padding: 2.2rem 2rem 1.5rem 2rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            transition: box-shadow 0.3s;
+            position: relative;
+        }
+
+        .event-card:hover {
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.18);
+        }
+
+        .event-card .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-card .card-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.2rem;
+        }
+
+        .event-card .card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            font-size: 0.98rem;
+            color: #666;
+            margin-bottom: 0.7rem;
+        }
+
+        .event-card .card-description {
+            font-size: 1.05rem;
+            color: #444;
+            margin-bottom: 0.8rem;
+            line-height: 1.7;
+        }
+
+        .event-card .card-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .event-card .card-features span {
+            background: #f4f6ff;
+            color: #667eea;
+            padding: 0.3rem 0.9rem;
+            border-radius: 15px;
+            font-size: 0.92rem;
+            font-weight: 500;
+        }
+
+        .event-card .card-actions {
+            display: flex;
+            gap: 0.7rem;
+            margin-top: 0.5rem;
+        }
+
+        .event-card .register-btn,
+        .event-card .details-btn,
+        .event-card .calendar-btn {
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .event-card .register-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: #fff;
+        }
+
+        .event-card .register-btn:hover {
+            background: linear-gradient(45deg, #764ba2, #667eea);
+        }
+
+        .event-card .details-btn {
+            background: #f4f6ff;
+            color: #667eea;
+            border: 1.5px solid #667eea;
+        }
+
+        .event-card .details-btn:hover {
+            background: #667eea;
+            color: #fff;
+        }
+
+        .event-card .calendar-btn {
+            background: #fff;
+            color: #667eea;
+            border: 1.5px solid #667eea;
+        }
+
+        .event-card .calendar-btn:hover {
+            background: #667eea;
+            color: #fff;
+        }
+
+        .event-card .countdown-timer {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: #f4f6ff;
+            color: #667eea;
+            padding: 0.4rem 1rem;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        @media (max-width: 600px) {
+            .event-card {
+                padding: 1.2rem 0.7rem 1rem 0.7rem;
+            }
+
+            .event-card .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .event-card .countdown-timer {
+                top: 0.7rem;
+                right: 0.7rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-rocket"></i> TechFests
+        </div>
+        <ul class="nav-links">
+            <li><a href="#hero"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#events"><i class="fas fa-calendar-alt"></i> Events</a></li>
+            <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="#stats"><i class="fas fa-chart-bar"></i> Stats</a></li>
+            <li><a href="#schedule"><i class="fas fa-clock"></i> Schedule</a></li>
+        </ul>
+        <div class="nav-controls">
+            <button id="darkModeToggle" class="theme-toggle" title="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button id="newsletterBtn" class="newsletter-btn" title="Subscribe to Newsletter">
+                <i class="fas fa-envelope"></i>
+            </button>
+            <button id="loginBtn" class="login-btn" title="Login / My Account">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1><i class="fas fa-star"></i> Join the Ultimate Tech Experience!</h1>
+            <p>Discover cutting-edge technologies, network with industry experts, and unlock your potential at the largest tech festival of 2025.</p>
+            <div class="cta-buttons">
+                <a href="#events" class="btn btn-primary">
+                    <i class="fas fa-ticket-alt"></i> Explore Events
+                </a>
+                <a href="#about" class="btn btn-secondary">
+                    <i class="fas fa-play"></i> Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <i class="fas fa-users"></i>
+                <div class="stat-number">5000+</div>
+                <div class="stat-label">Attendees</div>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-calendar-check"></i>
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Events</div>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-microphone"></i>
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Speakers</div>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-trophy"></i>
+                <div class="stat-number">₹10L+</div>
+                <div class="stat-label">Prize Pool</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="events">
+        <div class="section-header">
+            <h2><i class="fas fa-calendar-alt"></i> Featured Events</h2>
+            <p>Choose from our curated selection of cutting-edge tech events</p>
+            <div class="event-stats-summary" id="eventStatsSummary">
+                <!-- Dynamic event count and total seats will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search events by name, category, or price..." />
+                <button id="clearSearch" class="clear-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Events</button>
+                <button class="filter-btn" data-filter="free">Free</button>
+                <button class="filter-btn" data-filter="paid">Paid</button>
+                <button class="filter-btn" data-filter="workshop">Workshops</button>
+                <button class="filter-btn" data-filter="summit">Summits</button>
+            </div>
+        </div>
+
+        <div class="event-cards" id="eventCards">
+            <div class="card" data-category="workshop paid" data-price="500" data-date="2025-03-15T09:00:00">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad0c5?w=400&h=250&fit=crop" alt="AI Workshop" />
+                    <div class="card-overlay">
+                        <span class="category-badge">Workshop</span>
+                        <span class="price-badge">₹500</span>
+                        <div class="countdown-timer" id="countdown-ai">
+                            <i class="fas fa-clock"></i>
+                            <span class="countdown-text">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-icon ai-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div>
+                            <h3>AI & ML Workshop</h3>
+                            <div class="card-meta">
+                                <span class="price">₹500</span>
+                                <span><i class="fas fa-clock"></i> 9:00 AM - 12:00 PM</span>
+                                <span><i class="fas fa-users"></i> 50 Seats</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Main Auditorium</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Master the fundamentals of Artificial Intelligence and Machine Learning with hands-on projects and real-world applications.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-laptop"></i> Hands-on Practice</span>
+                        <span><i class="fas fa-certificate"></i> Certificate</span>
+                        <span><i class="fas fa-coffee"></i> Refreshments</span>
+                    </div>
+                    <div class="card-actions">
+                        <button onclick="openRegistration('AI & ML Workshop', 500)" class="register-btn">
+                            <i class="fas fa-ticket-alt"></i> Register Now
+                        </button>
+                        <button onclick="viewDetails('AI & ML Workshop')" class="details-btn">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                        <button onclick="addToCalendar('AI & ML Workshop', '2025-03-15T09:00:00', 'Main Auditorium')" class="calendar-btn">
+                            <i class="fas fa-calendar-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="workshop free" data-price="0">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=250&fit=crop" alt="Frontend Workshop" />
+                    <div class="card-overlay">
+                        <span class="category-badge">Workshop</span>
+                        <span class="free-badge">Free</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-icon frontend-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div>
+                            <h3>Frontend Masterclass</h3>
+                            <div class="card-meta">
+                                <span class="free-badge">Free</span>
+                                <span><i class="fas fa-clock"></i> 2 Hours</span>
+                                <span><i class="fas fa-users"></i> 100 Seats</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Transform into a frontend wizard with modern frameworks, responsive design, and performance optimization techniques.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-laptop"></i> Live Coding</span>
+                        <span><i class="fas fa-certificate"></i> Certificate</span>
+                        <span><i class="fas fa-wifi"></i> Wi-Fi</span>
+                    </div>
+                    <div class="card-actions">
+                        <button onclick="openRegistration('Frontend Masterclass', 0)" class="register-btn">
+                            <i class="fas fa-ticket-alt"></i> Register Now
+                        </button>
+                        <button onclick="viewDetails('Frontend Masterclass')" class="details-btn">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="workshop paid" data-price="300">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=250&fit=crop" alt="Blockchain Workshop" />
+                    <div class="card-overlay">
+                        <span class="category-badge">Workshop</span>
+                        <span class="price-badge">₹300</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-icon blockchain-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div>
+                            <h3>Blockchain Bootcamp</h3>
+                            <div class="card-meta">
+                                <span class="price">₹300</span>
+                                <span><i class="fas fa-clock"></i> 4 Hours</span>
+                                <span><i class="fas fa-users"></i> 40 Seats</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Dive into the world of Web3, smart contracts, and decentralized applications with practical blockchain development.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-laptop"></i> Smart Contracts</span>
+                        <span><i class="fas fa-certificate"></i> Certificate</span>
+                        <span><i class="fas fa-coffee"></i> Refreshments</span>
+                    </div>
+                    <div class="card-actions">
+                        <button onclick="openRegistration('Blockchain Bootcamp', 300)" class="register-btn">
+                            <i class="fas fa-ticket-alt"></i> Register Now
+                        </button>
+                        <button onclick="viewDetails('Blockchain Bootcamp')" class="details-btn">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="summit free" data-price="0">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=250&fit=crop" alt="Cybersecurity Summit" />
+                    <div class="card-overlay">
+                        <span class="category-badge">Summit</span>
+                        <span class="free-badge">Free</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-icon cyber-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Cybersecurity Summit</h3>
+                            <div class="card-meta">
+                                <span class="free-badge">Free</span>
+                                <span><i class="fas fa-clock"></i> 2.5 Hours</span>
+                                <span><i class="fas fa-users"></i> 200 Seats</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Learn ethical hacking, network security, and protect the digital world with industry-leading cybersecurity experts.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-shield-alt"></i> Security Demo</span>
+                        <span><i class="fas fa-certificate"></i> Certificate</span>
+                        <span><i class="fas fa-wifi"></i> Wi-Fi</span>
+                    </div>
+                    <div class="card-actions">
+                        <button onclick="openRegistration('Cybersecurity Summit', 0)" class="register-btn">
+                            <i class="fas fa-ticket-alt"></i> Register Now
+                        </button>
+                        <button onclick="viewDetails('Cybersecurity Summit')" class="details-btn">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="workshop paid" data-price="400">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=250&fit=crop" alt="Mobile Development" />
+                    <div class="card-overlay">
+                        <span class="category-badge">Workshop</span>
+                        <span class="price-badge">₹400</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-icon ai-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Mobile App Development</h3>
+                            <div class="card-meta">
+                                <span class="price">₹400</span>
+                                <span><i class="fas fa-clock"></i> 3.5 Hours</span>
+                                <span><i class="fas fa-users"></i> 35 Seats</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Build cross-platform mobile applications using React Native and Flutter with real-world project implementation.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-laptop"></i> App Building</span>
+                        <span><i class="fas fa-certificate"></i> Certificate</span>
+                        <span><i class="fas fa-coffee"></i> Refreshments</span>
+                    </div>
+                    <div class="card-actions">
+                        <button onclick="openRegistration('Mobile App Development', 400)" class="register-btn">
+                            <i class="fas fa-ticket-alt"></i> Register Now
+                        </button>
+                        <button onclick="viewDetails('Mobile App Development')" class="details-btn">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="workshop paid" data-price="600">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=250&fit=crop" alt="Game Development" />
+                    <div class="card-overlay">
+                        <span class="category-badge">Workshop</span>
+                        <span class="price-badge">₹600</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-icon frontend-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div>
+                            <h3>Game Development Workshop</h3>
+                            <div class="card-meta">
+                                <span class="price">₹600</span>
+                                <span><i class="fas fa-clock"></i> 4 Hours</span>
+                                <span><i class="fas fa-users"></i> 30 Seats</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Create immersive games using Unity and Unreal Engine with advanced graphics, physics, and multiplayer features.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-laptop"></i> Game Creation</span>
+                        <span><i class="fas fa-certificate"></i> Certificate</span>
+                        <span><i class="fas fa-coffee"></i> Refreshments</span>
+                    </div>
+                    <div class="card-actions">
+                        <button onclick="openRegistration('Game Development Workshop', 600)" class="register-btn">
+                            <i class="fas fa-ticket-alt"></i> Register Now
+                        </button>
+                        <button onclick="viewDetails('Game Development Workshop')" class="details-btn">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="summit free" data-price="0">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=250&fit=crop" alt="Data Science Summit" />
+                    <div class="card-overlay">
+                        <span class="category-badge">Summit</span>
+                        <span class="free-badge">Free</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-icon ai-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <h3>Data Science Summit</h3>
+                            <div class="card-meta">
+                                <span class="free-badge">Free</span>
+                                <span><i class="fas fa-clock"></i> 3 Hours</span>
+                                <span><i class="fas fa-users"></i> 150 Seats</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Explore the world of data science, analytics, and machine learning with industry experts and hands-on sessions.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-chart-bar"></i> Analytics Demo</span>
+                        <span><i class="fas fa-certificate"></i> Certificate</span>
+                        <span><i class="fas fa-wifi"></i> Wi-Fi</span>
+                    </div>
+                    <div class="card-actions">
+                        <button onclick="openRegistration('Data Science Summit', 0)" class="register-btn">
+                            <i class="fas fa-ticket-alt"></i> Register Now
+                        </button>
+                        <button onclick="viewDetails('Data Science Summit')" class="details-btn">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="workshop paid" data-price="450">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d308141a?w=400&h=250&fit=crop" alt="DevOps Workshop" />
+                    <div class="card-overlay">
+                        <span class="category-badge">Workshop</span>
+                        <span class="price-badge">₹450</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-icon cyber-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div>
+                            <h3>DevOps Masterclass</h3>
+                            <div class="card-meta">
+                                <span class="price">₹450</span>
+                                <span><i class="fas fa-clock"></i> 4.5 Hours</span>
+                                <span><i class="fas fa-users"></i> 25 Seats</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Master CI/CD pipelines, containerization, and cloud deployment with practical DevOps implementation.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-laptop"></i> Hands-on Practice</span>
+                        <span><i class="fas fa-certificate"></i> Certificate</span>
+                        <span><i class="fas fa-coffee"></i> Refreshments</span>
+                    </div>
+                    <div class="card-actions">
+                        <button onclick="openRegistration('DevOps Masterclass', 450)" class="register-btn">
+                            <i class="fas fa-ticket-alt"></i> Register Now
+                        </button>
+                        <button onclick="viewDetails('DevOps Masterclass')" class="details-btn">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Schedule Timeline -->
+    <section id="schedule" class="schedule">
+        <div class="section-header">
+            <h2><i class="fas fa-clock"></i> Event Schedule</h2>
+            <p>Mark your calendar for these exciting tech events</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">
+                    <span class="day">15</span>
+                    <span class="month">MAR</span>
+                </div>
+                <div class="timeline-content">
+                    <h3>AI & ML Workshop</h3>
+                    <p><i class="fas fa-clock"></i> 9:00 AM - 12:00 PM</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Main Auditorium, Tech Hub</p>
+                    <p><i class="fas fa-user"></i> Dr. Sarah Chen (AI Expert)</p>
+                    <span class="status-badge available">Available</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">
+                    <span class="day">16</span>
+                    <span class="month">MAR</span>
+                </div>
+                <div class="timeline-content">
+                    <h3>Frontend Masterclass</h3>
+                    <p><i class="fas fa-clock"></i> 2:00 PM - 4:00 PM</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Room 201, Innovation Center</p>
+                    <p><i class="fas fa-user"></i> John Smith (Senior Developer)</p>
+                    <span class="status-badge available">Available</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">
+                    <span class="day">17</span>
+                    <span class="month">MAR</span>
+                </div>
+                <div class="timeline-content">
+                    <h3>Blockchain Bootcamp</h3>
+                    <p><i class="fas fa-clock"></i> 10:00 AM - 2:00 PM</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Crypto Lab, Block Center</p>
+                    <p><i class="fas fa-user"></i> Alex Rodriguez (Blockchain Architect)</p>
+                    <span class="status-badge limited">Limited Seats</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">
+                    <span class="day">18</span>
+                    <span class="month">MAR</span>
+                </div>
+                <div class="timeline-content">
+                    <h3>Cybersecurity Summit</h3>
+                    <p><i class="fas fa-clock"></i> 1:00 PM - 3:30 PM</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Security Hall, Cyber Center</p>
+                    <p><i class="fas fa-user"></i> Maria Garcia (Security Specialist)</p>
+                    <span class="status-badge available">Available</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">
+                    <span class="day">19</span>
+                    <span class="month">MAR</span>
+                </div>
+                <div class="timeline-content">
+                    <h3>Mobile App Development</h3>
+                    <p><i class="fas fa-clock"></i> 9:30 AM - 1:00 PM</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Mobile Lab, App Center</p>
+                    <p><i class="fas fa-user"></i> David Kim (Mobile Expert)</p>
+                    <span class="status-badge limited">Limited Seats</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">
+                    <span class="day">20</span>
+                    <span class="month">MAR</span>
+                </div>
+                <div class="timeline-content">
+                    <h3>Game Development Workshop</h3>
+                    <p><i class="fas fa-clock"></i> 10:00 AM - 2:00 PM</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Game Studio, Creative Hub</p>
+                    <p><i class="fas fa-user"></i> Lisa Wang (Game Developer)</p>
+                    <span class="status-badge available">Available</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Stats Dashboard -->
+    <section id="stats" class="stats-dashboard">
+        <div class="section-header">
+            <h2><i class="fas fa-chart-bar"></i> Live Event Statistics</h2>
+            <p>Real-time insights into event registrations and engagement</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalRegistrations">0</h3>
+                    <p>Total Registrations</p>
+                </div>
+                <div class="stat-progress">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="freeRegistrations">0</h3>
+                    <p>Free Events</p>
+                </div>
+                <div class="stat-progress">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-rupee-sign"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="paidRegistrations">0</h3>
+                    <p>Paid Events</p>
+                </div>
+                <div class="stat-progress">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalRevenue">₹0</h3>
+                    <p>Total Revenue</p>
+                </div>
+                <div class="stat-progress">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-stats">
+            <h3>Event-wise Registrations</h3>
+            <div class="event-stats-grid" id="eventStatsGrid">
+                <!-- Event stats will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-content">
+            <h2><i class="fas fa-info-circle"></i> About TechFest 2025</h2>
+            <p>TechFest 2025 is the premier technology festival that brings together developers, designers, entrepreneurs, and tech enthusiasts from around the world. Our mission is to foster innovation, share knowledge, and create opportunities for the next generation of tech leaders.</p>
+
+            <div class="features-grid">
+                <div class="feature">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Innovation Hub</h3>
+                    <p>Discover cutting-edge technologies and innovative solutions</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Networking</h3>
+                    <p>Connect with industry experts and like-minded professionals</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Learning</h3>
+                    <p>Gain practical skills through hands-on workshops</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-trophy"></i>
+                    <h3>Competitions</h3>
+                    <p>Participate in hackathons and win exciting prizes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-rocket"></i> TechFests </h3>
+                <p>Empowering the future of technology through innovative events and workshops.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/mr.arya_______/" target="_blank" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@STUDENTSERVICECOMMUNITY" target="_blank" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/maheswaram-subrahmanyam-361238275/" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/maheswaramsubrahmanyam" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.whatsapp.com/channel/0029VaYTpyWJpe8oGde6sz3K" target="_blank" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 TechFest. All rights reserved. | Developed by <strong>Maheswaram Subrahmanyam</strong></p>
+            <p>Student Service Community | Empowering Students Through Technology</p>
+        </div>
+    </footer>
+
+    <!-- Registration Modal -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle"><i class="fas fa-ticket-alt"></i> Event Registration</h2>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+                </div>
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address" required />
+                </div>
+                <div class="form-group">
+                    <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" />
+                </div>
+                <input type="hidden" id="selectedEvent" name="event" />
+                <button type="submit">
+                    <i class="fas fa-check"></i> Confirm Registration
+                </button>
+            </form>
+            <div id="statusMsg"></div>
+        </div>
+    </div>
+
+    <!-- Newsletter Subscription Modal -->
+    <div id="newsletterModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeNewsletterModal()">&times;</span>
+            <h2><i class="fas fa-envelope"></i> Subscribe to Our Newsletter</h2>
+            <p>Get early access to events, exclusive discounts, and tech updates!</p>
+            <form id="newsletterForm">
+                <div class="form-group">
+                    <label for="newsletterName"><i class="fas fa-user"></i> Full Name</label>
+                    <input type="text" id="newsletterName" name="name" placeholder="Enter your full name" required />
+                </div>
+                <div class="form-group">
+                    <label for="newsletterEmail"><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" id="newsletterEmail" name="email" placeholder="Enter your email address" required />
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="newsletterConsent" required />
+                        I agree to receive newsletters and updates
+                    </label>
+                </div>
+                <button type="submit">
+                    <i class="fas fa-paper-plane"></i> Subscribe Now
+                </button>
+            </form>
+            <div id="newsletterStatusMsg"></div>
+        </div>
+    </div>
+
+    <!-- Login/User Profile Modal -->
+    <div id="loginModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <div id="loginForm" class="auth-form">
+                <h2><i class="fas fa-sign-in-alt"></i> Login to Your Account</h2>
+                <p>Access your registered events and manage your profile</p>
+                <form id="userLoginForm">
+                    <div class="form-group">
+                        <label for="loginEmail"><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" id="loginEmail" name="email" placeholder="Enter your email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword"><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required />
+                    </div>
+                    <button type="submit">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>
+                <div class="auth-links">
+                    <p>Don't have an account? <a href="#" onclick="showRegisterForm()">Register here</a></p>
+                </div>
+            </div>
+
+            <div id="registerForm" class="auth-form hidden">
+                <h2><i class="fas fa-user-plus"></i> Create Account</h2>
+                <p>Join TechFest 2025 and start your journey</p>
+                <form id="userRegisterForm">
+                    <div class="form-group">
+                        <label for="regName"><i class="fas fa-user"></i> Full Name</label>
+                        <input type="text" id="regName" name="name" placeholder="Enter your full name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail"><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" id="regEmail" name="email" placeholder="Enter your email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword"><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="regPassword" name="password" placeholder="Create a password" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="regPhone"><i class="fas fa-phone"></i> Phone Number</label>
+                        <input type="tel" id="regPhone" name="phone" placeholder="Enter your phone number" />
+                    </div>
+                    <button type="submit">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </form>
+                <div class="auth-links">
+                    <p>Already have an account? <a href="#" onclick="showLoginForm()">Login here</a></p>
+                </div>
+            </div>
+
+            <div id="userProfile" class="user-profile hidden">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img id="userAvatar" src="https://via.placeholder.com/80/667eea/ffffff?text=U" alt="User Avatar" />
+                    </div>
+                    <div class="profile-info">
+                        <h3 id="userName">User Name</h3>
+                        <p id="userEmail">user@example.com</p>
+                        <div class="profile-badges">
+                            <span class="badge"><i class="fas fa-trophy"></i> 3 Events</span>
+                            <span class="badge"><i class="fas fa-star"></i> Gold Member</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-tabs">
+                    <button class="tab-btn active" onclick="showTab('myEvents')">My Events</button>
+                    <button class="tab-btn" onclick="showTab('myTickets')">My Tickets</button>
+                    <button class="tab-btn" onclick="showTab('myBadges')">My Badges</button>
+                    <button class="tab-btn" onclick="showTab('settings')">Settings</button>
+                </div>
+
+                <div id="myEvents" class="tab-content active">
+                    <h4>My Registered Events</h4>
+                    <div id="userEventsList">
+                        <!-- User events will be populated here -->
+                    </div>
+                </div>
+
+                <div id="myTickets" class="tab-content">
+                    <h4>My Tickets</h4>
+                    <div id="userTicketsList">
+                        <!-- User tickets will be populated here -->
+                    </div>
+                </div>
+
+                <div id="myBadges" class="tab-content">
+                    <h4>My Achievement Badges</h4>
+                    <div id="userBadgesList">
+                        <!-- User badges will be populated here -->
+                    </div>
+                </div>
+
+                <div id="settings" class="tab-content">
+                    <h4>Account Settings</h4>
+                    <button onclick="logout()" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <div id="authStatusMsg"></div>
+        </div>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div id="eventDetailsModal" class="modal hidden">
+        <div class="modal-content large-modal">
+            <span class="close" onclick="closeEventDetails()">&times;</span>
+            <div id="eventDetailsContent">
+                <!-- Event details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Coupon Code Modal -->
+    <div id="couponModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeCouponModal()">&times;</span>
+            <h2><i class="fas fa-tag"></i> Apply Coupon Code</h2>
+            <form id="couponForm">
+                <div class="form-group">
+                    <label for="couponCode"><i class="fas fa-tag"></i> Coupon Code</label>
+                    <input type="text" id="couponCode" placeholder="Enter coupon code (e.g., STUDENT50)" />
+                </div>
+                <button type="submit">
+                    <i class="fas fa-check"></i> Apply Coupon
+                </button>
+            </form>
+            <div id="couponStatusMsg"></div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chatbot" class="chatbot">
+        <div class="chatbot-toggle" onclick="toggleChatbot()">
+            <i class="fas fa-comments"></i>
+            <span class="notification-dot"></span>
+        </div>
+        <div class="chatbot-container hidden">
+            <div class="chatbot-header">
+                <h3><i class="fas fa-robot"></i> TechFest Assistant</h3>
+                <button onclick="toggleChatbot()" class="close-chat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    <i class="fas fa-robot"></i>
+                    <div class="message-content">
+                        <p>Hello! I'm your TechFest assistant. How can I help you today?</p>
+                        <div class="quick-replies">
+                            <button onclick="sendQuickReply('events')"> View Events</button>
+                            <button onclick="sendQuickReply('schedule')">Event Schedule</button>
+                            <button onclick="sendQuickReply('registration')"> Registration</button>
+                            <button onclick="sendQuickReply('contact')"> Contact Info</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type your message..." />
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Script -->
+    <script>
+        emailjs.init('tdOTztnrnYhU5lS2L'); // ✅ Your EmailJS public key
+
+        let selectedEventName = '';
+        let selectedEventPrice = 0;
+
+        function openRegistration(eventName, price) {
+            selectedEventName = eventName;
+            selectedEventPrice = price;
+            document.getElementById("modal").classList.remove("hidden");
+            document.getElementById("modalTitle").innerHTML = `<i class="fas fa-ticket-alt"></i> Register for ${eventName}`;
+            document.getElementById("selectedEvent").value = eventName;
+
+            // Add price info to modal
+            const priceInfo = price > 0 ? ` (₹${price})` : ' (Free)';
+            document.getElementById("modalTitle").innerHTML += priceInfo;
+        }
+
+        function closeModal() {
+            document.getElementById("modal").classList.add("hidden");
+            document.getElementById("statusMsg").innerText = '';
+            document.getElementById("registrationForm").reset();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById("modal").addEventListener("click", function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        document.getElementById("registrationForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const name = this.name.value;
+            const email = this.email.value;
+            const phone = this.phone.value;
+
+            if (selectedEventPrice > 0) {
+                // Paid event: open Razorpay payment page in new tab
+                sendEmail(name, email, selectedEventName, phone); // Send email first
+                window.open("https://razorpay.me/@techtalk931", "_self");
+                document.getElementById("statusMsg").innerHTML = `
+          <div class="success">
+            <i class="fas fa-check-circle"></i> Redirected to payment page. Check your email for confirmation.
+          </div>`;
+                setTimeout(closeModal, 3000);
+            } else {
+                // Free event: just send email
+                sendEmail(name, email, selectedEventName, phone);
+            }
+        });
+
+        function sendEmail(name, email, eventName, phone) {
+            emailjs.send("service_bngk1nc", "template_juqlrrm", {
+                    to_name: name,
+                    to_email: email,
+                    event_name: eventName,
+                    phone: phone || 'Not provided'
+                })
+                .then(() => {
+                    document.getElementById("statusMsg").innerHTML = `
+          <div class="success">
+            <i class="fas fa-check-circle"></i> Registration successful! Check your email for confirmation.
+          </div>`;
+                    document.getElementById("registrationForm").reset();
+                    setTimeout(closeModal, 3000);
+                })
+                .catch(() => {
+                    document.getElementById("statusMsg").innerHTML = `
+          <div class="error">
+            <i class="fas fa-exclamation-circle"></i> Error sending confirmation email. Please try again.
+          </div>`;
+                });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Search and Filter Functionality
+        const searchInput = document.getElementById('searchInput');
+        const clearSearchBtn = document.getElementById('clearSearch');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const eventCards = document.querySelectorAll('.card');
+
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            currentSearch = this.value.toLowerCase();
+            filterEvents();
+        });
+
+        // Clear search
+        clearSearchBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            currentSearch = '';
+            filterEvents();
+        });
+
+        // Filter functionality
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.getAttribute('data-filter');
+                filterEvents();
+            });
+        });
+
+        function filterEvents() {
+            eventCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const category = card.getAttribute('data-category');
+                const price = card.getAttribute('data-price');
+
+                let matchesSearch = true;
+                let matchesFilter = true;
+
+                // Search filter
+                if (currentSearch) {
+                    matchesSearch = title.includes(currentSearch) ||
+                        category.includes(currentSearch) ||
+                        price.includes(currentSearch);
+                }
+
+                // Category filter
+                if (currentFilter !== 'all') {
+                    if (currentFilter === 'free') {
+                        matchesFilter = price === '0';
+                    } else if (currentFilter === 'paid') {
+                        matchesFilter = price !== '0';
+                    } else {
+                        matchesFilter = category.includes(currentFilter);
+                    }
+                }
+
+                // Show/hide card
+                if (matchesSearch && matchesFilter) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s ease';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // View details function
+        function viewDetails(eventName) {
+            alert(`Detailed information for ${eventName} will be displayed here.\n\nThis could include:\n• Detailed agenda\n• Speaker profiles\n• Prerequisites\n• What to bring\n• Venue details\n• Contact information`);
+        }
+
+        // Add fadeIn animation
+        const style = document.createElement('style');
+        style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    `;
+        document.head.appendChild(style);
+
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        darkModeToggle.addEventListener('click', function() {
+            body.classList.toggle('dark-mode');
+            const icon = this.querySelector('i');
+            if (body.classList.contains('dark-mode')) {
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        // Load dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            darkModeToggle.querySelector('i').className = 'fas fa-sun';
+        }
+
+        // Newsletter Modal
+        const newsletterBtn = document.getElementById('newsletterBtn');
+        const newsletterModal = document.getElementById('newsletterModal');
+
+        newsletterBtn.addEventListener('click', function() {
+            newsletterModal.classList.remove('hidden');
+        });
+
+        function closeNewsletterModal() {
+            newsletterModal.classList.add('hidden');
+            document.getElementById('newsletterStatusMsg').innerText = '';
+            document.getElementById('newsletterForm').reset();
+        }
+
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = this.name.value;
+            const email = this.email.value;
+
+            // Send newsletter subscription email
+            emailjs.send("service_bngk1nc", "template_juqlrrm", {
+                    to_name: name,
+                    to_email: email,
+                    event_name: "Newsletter Subscription"
+                })
+                .then(() => {
+                    document.getElementById('newsletterStatusMsg').innerHTML = `
+          <div class="success">
+            <i class="fas fa-check-circle"></i> Successfully subscribed to newsletter!
+          </div>`;
+                    setTimeout(closeNewsletterModal, 2000);
+                })
+                .catch(() => {
+                    document.getElementById('newsletterStatusMsg').innerHTML = `
+          <div class="error">
+            <i class="fas fa-exclamation-circle"></i> Error subscribing to newsletter.
+          </div>`;
+                });
+        });
+
+        // Chatbot Functionality
+        let chatbotOpen = false;
+
+        function toggleChatbot() {
+            const container = document.querySelector('.chatbot-container');
+            chatbotOpen = !chatbotOpen;
+
+            if (chatbotOpen) {
+                container.classList.remove('hidden');
+                document.querySelector('.notification-dot').style.display = 'none';
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+
+        function sendQuickReply(type) {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            let response = '';
+
+            switch (type) {
+                case 'events':
+                    response = 'We have 8 amazing events lined up! Check out our events section for AI/ML Workshop, Frontend Masterclass, Blockchain Bootcamp, Cybersecurity Summit, Mobile App Development, Game Development Workshop, Data Science Summit, and DevOps Masterclass.';
+                    break;
+                case 'schedule':
+                    response = 'Our events run from March 15-20, 2025. Each event has specific timings and venues. Check the schedule section for detailed information!';
+                    break;
+                case 'registration':
+                    response = 'Registration is simple! Just click on any event card and fill out the form. Free events require only registration, while paid events will redirect you to our payment gateway.';
+                    break;
+                case 'contact':
+                    response = 'You can reach us through our social media channels: Instagram, YouTube, LinkedIn, GitHub, and WhatsApp. All links are in the footer!';
+                    break;
+            }
+
+            addBotMessage(response);
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatbotInput');
+            const message = input.value.trim();
+
+            if (message) {
+                addUserMessage(message);
+                input.value = '';
+
+                // Simulate bot response
+                setTimeout(() => {
+                    const responses = [
+                        'That\'s a great question! Let me help you with that.',
+                        'I understand your query. Here\'s what I can tell you...',
+                        'Thanks for asking! Here\'s the information you need.',
+                        'I\'m here to help! Let me provide you with the details.'
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addBotMessage(randomResponse);
+                }, 1000);
+            }
+        }
+
+        function addUserMessage(message) {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user-message';
+            messageDiv.innerHTML = `
+        <i class="fas fa-user"></i>
+        <div class="message-content">
+          <p>${message}</p>
+        </div>
+      `;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function addBotMessage(message) {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot-message';
+            messageDiv.innerHTML = `
+        <i class="fas fa-robot"></i>
+        <div class="message-content">
+          <p>${message}</p>
+        </div>
+      `;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Enter key for chatbot
+        document.getElementById('chatbotInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Stats Dashboard
+        let eventStats = {
+            'AI & ML Workshop': 0,
+            'Frontend Masterclass': 0,
+            'Blockchain Bootcamp': 0,
+            'Cybersecurity Summit': 0,
+            'Mobile App Development': 0,
+            'Game Development Workshop': 0,
+            'Data Science Summit': 0,
+            'DevOps Masterclass': 0
+        };
+
+        function updateStats() {
+            const totalRegistrations = Object.values(eventStats).reduce((a, b) => a + b, 0);
+            const freeRegistrations = eventStats['Frontend Masterclass'] + eventStats['Cybersecurity Summit'] + eventStats['Data Science Summit'];
+            const paidRegistrations = totalRegistrations - freeRegistrations;
+            const totalRevenue = (eventStats['AI & ML Workshop'] * 500) +
+                (eventStats['Blockchain Bootcamp'] * 300) +
+                (eventStats['Mobile App Development'] * 400) +
+                (eventStats['Game Development Workshop'] * 600) +
+                (eventStats['DevOps Masterclass'] * 450);
+
+            document.getElementById('totalRegistrations').textContent = totalRegistrations;
+            document.getElementById('freeRegistrations').textContent = freeRegistrations;
+            document.getElementById('paidRegistrations').textContent = paidRegistrations;
+            document.getElementById('totalRevenue').textContent = `₹${totalRevenue}`;
+
+            // Update progress bars
+            const maxRegistrations = 100;
+            document.querySelectorAll('.progress-bar').forEach((bar, index) => {
+                const percentage = index === 0 ? (totalRegistrations / maxRegistrations) * 100 :
+                    index === 1 ? (freeRegistrations / maxRegistrations) * 100 :
+                    index === 2 ? (paidRegistrations / maxRegistrations) * 100 :
+                    (totalRevenue / 100000) * 100;
+                bar.style.width = Math.min(percentage, 100) + '%';
+            });
+
+            // Update event-wise stats
+            updateEventStats();
+        }
+
+        function updateEventStats() {
+            const grid = document.getElementById('eventStatsGrid');
+            grid.innerHTML = '';
+
+            Object.entries(eventStats).forEach(([event, registrations]) => {
+                const item = document.createElement('div');
+                item.className = 'event-stat-item';
+                item.innerHTML = `
+          <h4>${event}</h4>
+          <p>Registrations: ${registrations}</p>
+        `;
+                grid.appendChild(item);
+            });
+        }
+
+        // PDF Ticket Generation
+        function generateTicket(name, email, eventName, price) {
+            const {
+                jsPDF
+            } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Add header
+            doc.setFontSize(24);
+            doc.setTextColor(102, 126, 234);
+            doc.text('TechFest 2025', 105, 30, {
+                align: 'center'
+            });
+
+            // Add ticket details
+            doc.setFontSize(16);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Event Ticket', 105, 50, {
+                align: 'center'
+            });
+
+            doc.setFontSize(12);
+            doc.text(`Name: ${name}`, 20, 70);
+            doc.text(`Email: ${email}`, 20, 80);
+            doc.text(`Event: ${eventName}`, 20, 90);
+            doc.text(`Price: ${price > 0 ? '₹' + price : 'Free'}`, 20, 100);
+            doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 110);
+            doc.text(`Time: ${new Date().toLocaleTimeString()}`, 20, 120);
+
+            // Generate QR code
+            const qrData = `${name}|${email}|${eventName}|${Date.now()}`;
+            const qr = new QRCode(document.createElement('div'), {
+                text: qrData,
+                width: 50,
+                height: 50
+            });
+
+            // Add QR code image (simplified)
+            doc.setFontSize(10);
+            doc.text('QR Code: ' + qrData.substring(0, 20) + '...', 20, 140);
+
+            // Add footer
+            doc.setFontSize(10);
+            doc.setTextColor(128, 128, 128);
+            doc.text('Generated by TechFest 2025', 105, 280, {
+                align: 'center'
+            });
+
+            // Save PDF
+            doc.save(`TechFest_Ticket_${eventName.replace(/\s+/g, '_')}.pdf`);
+        }
+
+        // Enhanced registration function
+        function openRegistration(eventName, price) {
+            selectedEventName = eventName;
+            selectedEventPrice = price;
+            document.getElementById("modal").classList.remove("hidden");
+            document.getElementById("modalTitle").innerHTML = `<i class="fas fa-ticket-alt"></i> Register for ${eventName}`;
+            document.getElementById("selectedEvent").value = eventName;
+
+            // Add price info to modal
+            const priceInfo = price > 0 ? ` (₹${price})` : ' (Free)';
+            document.getElementById("modalTitle").innerHTML += priceInfo;
+        }
+
+        // Enhanced form submission
+        document.getElementById("registrationForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const name = this.name.value;
+            const email = this.email.value;
+            const phone = this.phone.value;
+
+            // Update stats
+            eventStats[selectedEventName]++;
+            updateStats();
+
+            if (selectedEventPrice > 0) {
+                // Paid event: open Razorpay payment page in new tab
+                sendEmail(name, email, selectedEventName, phone);
+                generateTicket(name, email, selectedEventName, selectedEventPrice);
+                window.open("https://razorpay.me/@techtalk931", "_blank");
+                document.getElementById("statusMsg").innerHTML = `
+          <div class="success">
+            <i class="fas fa-check-circle"></i> Registration successful! Ticket downloaded. Redirected to payment page.
+          </div>`;
+                setTimeout(closeModal, 3000);
+            } else {
+                // Free event: just send email and generate ticket
+                sendEmail(name, email, selectedEventName, phone);
+                generateTicket(name, email, selectedEventName, selectedEventPrice);
+                document.getElementById("statusMsg").innerHTML = `
+          <div class="success">
+            <i class="fas fa-check-circle"></i> Registration successful! Ticket downloaded. Check your email.
+          </div>`;
+                setTimeout(closeModal, 3000);
+            }
+        });
+
+        // Initialize stats
+        updateStats();
+
+        // User Authentication System
+        let currentUser = null;
+        let userEvents = [];
+        let userTickets = [];
+        let userBadges = [];
+
+        // Load user data from localStorage
+        function loadUserData() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                userEvents = JSON.parse(localStorage.getItem('userEvents') || '[]');
+                userTickets = JSON.parse(localStorage.getItem('userTickets') || '[]');
+                userBadges = JSON.parse(localStorage.getItem('userBadges') || '[]');
+                updateLoginButton();
+            }
+        }
+
+        // Login button functionality
+        const loginBtn = document.getElementById('loginBtn');
+        loginBtn.addEventListener('click', function() {
+            if (currentUser) {
+                showUserProfile();
+            } else {
+                showLoginForm();
+            }
+        });
+
+        function showLoginForm() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('userProfile').classList.add('hidden');
+        }
+
+        function showRegisterForm() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('userProfile').classList.add('hidden');
+        }
+
+        function showUserProfile() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('userProfile').classList.remove('hidden');
+
+            // Update profile info
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('userAvatar').src = `https://via.placeholder.com/80/667eea/ffffff?text=${currentUser.name.charAt(0).toUpperCase()}`;
+
+            loadUserContent();
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('authStatusMsg').innerText = '';
+        }
+
+        function updateLoginButton() {
+            if (currentUser) {
+                loginBtn.innerHTML = '<i class="fas fa-user"></i>';
+                loginBtn.title = 'My Account';
+            } else {
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i>';
+                loginBtn.title = 'Login';
+            }
+        }
+
+        // User registration
+        document.getElementById('userRegisterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const userData = {
+                name: this.name.value,
+                email: this.email.value,
+                password: this.password.value,
+                phone: this.phone.value,
+                id: Date.now()
+            };
+
+            // Save user data
+            currentUser = userData;
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+
+            document.getElementById('authStatusMsg').innerHTML = `
+        <div class="success">
+          <i class="fas fa-check-circle"></i> Account created successfully!
+        </div>`;
+
+            updateLoginButton();
+            setTimeout(() => {
+                showUserProfile();
+            }, 1500);
+        });
+
+        // User login
+        document.getElementById('userLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.email.value;
+            const password = this.password.value;
+
+            // Simple login validation (in real app, use proper authentication)
+            if (email && password) {
+                currentUser = {
+                    name: email.split('@')[0],
+                    email: email,
+                    id: Date.now()
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                document.getElementById('authStatusMsg').innerHTML = `
+          <div class="success">
+            <i class="fas fa-check-circle"></i> Login successful!
+          </div>`;
+
+                updateLoginButton();
+                setTimeout(() => {
+                    showUserProfile();
+                }, 1500);
+            } else {
+                document.getElementById('authStatusMsg').innerHTML = `
+          <div class="error">
+            <i class="fas fa-exclamation-circle"></i> Please enter valid credentials.
+          </div>`;
+            }
+        });
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateLoginButton();
+            closeLoginModal();
+        }
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function loadUserContent() {
+            // Load user events
+            const eventsList = document.getElementById('userEventsList');
+            if (userEvents.length === 0) {
+                eventsList.innerHTML = '<p>No events registered yet.</p>';
+            } else {
+                eventsList.innerHTML = userEvents.map(event => `
+          <div class="event-item">
+            <h5>${event.name}</h5>
+            <p>${event.date}</p>
+          </div>
+        `).join('');
+            }
+
+            // Load user tickets
+            const ticketsList = document.getElementById('userTicketsList');
+            if (userTickets.length === 0) {
+                ticketsList.innerHTML = '<p>No tickets available.</p>';
+            } else {
+                ticketsList.innerHTML = userTickets.map(ticket => `
+          <div class="ticket-item">
+            <h5>${ticket.eventName}</h5>
+            <p>Ticket ID: ${ticket.id}</p>
+          </div>
+        `).join('');
+            }
+
+            // Load user badges
+            const badgesList = document.getElementById('userBadgesList');
+            if (userBadges.length === 0) {
+                badgesList.innerHTML = '<p>No badges earned yet.</p>';
+            } else {
+                badgesList.innerHTML = userBadges.map(badge => `
+          <div class="badge-item">
+            <i class="fas fa-trophy"></i>
+            <h5>${badge.name}</h5>
+            <p>${badge.description}</p>
+          </div>
+        `).join('');
+            }
+        }
+
+        // Countdown Timer Functionality
+        function updateCountdowns() {
+            const countdownElements = document.querySelectorAll('.countdown-timer');
+
+            countdownElements.forEach(element => {
+                const card = element.closest('.card');
+                const eventDate = new Date(card.getAttribute('data-date'));
+                const now = new Date();
+                const diff = eventDate - now;
+
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+                    let text = '';
+                    if (days > 0) {
+                        text = `${days}d ${hours}h`;
+                    } else if (hours > 0) {
+                        text = `${hours}h ${minutes}m`;
+                    } else {
+                        text = `${minutes}m`;
+                        element.classList.add('urgent');
+                    }
+
+                    element.querySelector('.countdown-text').textContent = text;
+                } else {
+                    element.querySelector('.countdown-text').textContent = 'Event Started';
+                    element.classList.add('urgent');
+                }
+            });
+        }
+
+        // Calendar Integration
+        function addToCalendar(eventName, eventDate, venue) {
+            const event = {
+                title: eventName,
+                start: eventDate,
+                end: new Date(new Date(eventDate).getTime() + 3 * 60 * 60 * 1000), // 3 hours duration
+                location: venue,
+                description: `TechFest 2025 - ${eventName}`
+            };
+
+            // Create .ics file
+            const icsContent = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'BEGIN:VEVENT',
+                `SUMMARY:${event.title}`,
+                `DTSTART:${formatDateForICS(event.start)}`,
+                `DTEND:${formatDateForICS(event.end)}`,
+                `LOCATION:${event.location}`,
+                `DESCRIPTION:${event.description}`,
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\r\n');
+
+            // Download .ics file
+            const blob = new Blob([icsContent], {
+                type: 'text/calendar'
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${eventName.replace(/\s+/g, '_')}.ics`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            alert('Event added to your calendar!');
+        }
+
+        function formatDateForICS(date) {
+            return new Date(date).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+        }
+
+        // Enhanced Event Details
+        function viewDetails(eventName) {
+            const eventDetails = {
+                'AI & ML Workshop': {
+                    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad0c5?w=400&h=250&fit=crop',
+                    description: 'Master the fundamentals of Artificial Intelligence and Machine Learning with hands-on projects and real-world applications. This workshop covers machine learning algorithms, neural networks, and practical implementation.',
+                    speaker: 'Dr. Sarah Chen',
+                    speakerBio: 'AI Expert with 10+ years of experience in machine learning and deep learning.',
+                    topics: ['Machine Learning Basics', 'Neural Networks', 'Deep Learning', 'Real-world Projects'],
+                    prerequisites: 'Basic Python knowledge',
+                    materials: 'Laptop with Python installed'
+                }
+            };
+
+            const event = eventDetails[eventName] || {
+                image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=250&fit=crop',
+                description: 'Join us for an exciting tech event!',
+                speaker: 'Expert Speaker',
+                speakerBio: 'Experienced professional in the field.',
+                topics: ['Topic 1', 'Topic 2', 'Topic 3'],
+                prerequisites: 'None',
+                materials: 'None required'
+            };
+
+            document.getElementById('eventDetailsContent').innerHTML = `
+        <div class="event-details">
+          <div class="event-image">
+            <img src="${event.image}" alt="${eventName}" />
+          </div>
+          <div class="event-info">
+            <h3>${eventName}</h3>
+            <p>${event.description}</p>
+            
+            <div class="event-meta">
+              <div class="meta-item">
+                <i class="fas fa-user"></i>
+                <h4>Speaker</h4>
+                <p>${event.speaker}</p>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-clock"></i>
+                <h4>Duration</h4>
+                <p>3 Hours</p>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <h4>Venue</h4>
+                <p>Main Auditorium</p>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-users"></i>
+                <h4>Capacity</h4>
+                <p>50 Seats</p>
+              </div>
+            </div>
+
+            <h4>Topics Covered:</h4>
+            <ul>
+              ${event.topics.map(topic => `<li>${topic}</li>`).join('')}
+            </ul>
+
+            <h4>Prerequisites:</h4>
+            <p>${event.prerequisites}</p>
+
+            <h4>What to Bring:</h4>
+            <p>${event.materials}</p>
+
+            <div class="event-actions">
+              <button onclick="openRegistration('${eventName}', 500)" class="register-btn">
+                <i class="fas fa-ticket-alt"></i> Register Now
+              </button>
+              <button onclick="addToCalendar('${eventName}', '2025-03-15T09:00:00', 'Main Auditorium')" class="calendar-btn">
+                <i class="fas fa-calendar-plus"></i> Add to Calendar
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+            document.getElementById('eventDetailsModal').classList.remove('hidden');
+        }
+
+        function closeEventDetails() {
+            document.getElementById('eventDetailsModal').classList.add('hidden');
+        }
+
+        // Coupon Code System
+        const couponCodes = {
+            'STUDENT50': {
+                discount: 50,
+                type: 'percentage'
+            },
+            'WELCOME20': {
+                discount: 20,
+                type: 'percentage'
+            },
+            'TECHFEST100': {
+                discount: 100,
+                type: 'fixed'
+            },
+            'EARLYBIRD': {
+                discount: 30,
+                type: 'percentage'
+            }
+        };
+
+        function applyCoupon() {
+            const couponCode = document.getElementById('couponCode').value.toUpperCase();
+            const coupon = couponCodes[couponCode];
+
+            if (coupon) {
+                document.getElementById('couponStatusMsg').innerHTML = `
+          <div class="coupon-applied">
+            <i class="fas fa-check-circle"></i>
+            Coupon applied! ${coupon.type === 'percentage' ? coupon.discount + '%' : '₹' + coupon.discount} discount
+          </div>`;
+
+                // Store applied coupon
+                localStorage.setItem('appliedCoupon', couponCode);
+            } else {
+                document.getElementById('couponStatusMsg').innerHTML = `
+          <div class="coupon-error">
+            <i class="fas fa-exclamation-circle"></i>
+            Invalid coupon code. Please try again.
+          </div>`;
+            }
+        }
+
+        function closeCouponModal() {
+            document.getElementById('couponModal').classList.add('hidden');
+            document.getElementById('couponStatusMsg').innerHTML = '';
+            document.getElementById('couponCode').value = '';
+        }
+
+        document.getElementById('couponForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            applyCoupon();
+        });
+
+        // Enhanced registration with user tracking
+        function openRegistration(eventName, price) {
+            selectedEventName = eventName;
+            selectedEventPrice = price;
+
+            // Apply coupon if available
+            const appliedCoupon = localStorage.getItem('appliedCoupon');
+            if (appliedCoupon && couponCodes[appliedCoupon]) {
+                const coupon = couponCodes[appliedCoupon];
+                if (coupon.type === 'percentage') {
+                    selectedEventPrice = Math.max(0, price - (price * coupon.discount / 100));
+                } else {
+                    selectedEventPrice = Math.max(0, price - coupon.discount);
+                }
+            }
+
+            document.getElementById("modal").classList.remove("hidden");
+            document.getElementById("modalTitle").innerHTML = `<i class="fas fa-ticket-alt"></i> Register for ${eventName}`;
+            document.getElementById("selectedEvent").value = eventName;
+
+            // Add price info to modal
+            const priceInfo = selectedEventPrice > 0 ? ` (₹${selectedEventPrice})` : ' (Free)';
+            document.getElementById("modalTitle").innerHTML += priceInfo;
+        }
+
+        // Enhanced form submission with user tracking
+        document.getElementById("registrationForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const name = this.name.value;
+            const email = this.email.value;
+            const phone = this.phone.value;
+
+            // Update stats
+            eventStats[selectedEventName]++;
+            updateStats();
+
+            // Add to user events if logged in
+            if (currentUser) {
+                const userEvent = {
+                    name: selectedEventName,
+                    date: new Date().toLocaleDateString(),
+                    price: selectedEventPrice
+                };
+                userEvents.push(userEvent);
+                localStorage.setItem('userEvents', JSON.stringify(userEvents));
+
+                // Generate ticket
+                const ticket = {
+                    id: 'TKT' + Date.now(),
+                    eventName: selectedEventName,
+                    userName: name,
+                    userEmail: email,
+                    date: new Date().toLocaleDateString(),
+                    price: selectedEventPrice
+                };
+                userTickets.push(ticket);
+                localStorage.setItem('userTickets', JSON.stringify(userTickets));
+
+                // Award badge
+                const badge = {
+                    name: `${selectedEventName} Participant`,
+                    description: `Successfully participated in ${selectedEventName}`,
+                    date: new Date().toLocaleDateString()
+                };
+                userBadges.push(badge);
+                localStorage.setItem('userBadges', JSON.stringify(userBadges));
+            }
+
+            if (selectedEventPrice > 0) {
+                // Paid event: open Razorpay payment page in new tab
+                sendEmail(name, email, selectedEventName, phone);
+                generateTicket(name, email, selectedEventName, selectedEventPrice);
+                window.open("https://razorpay.me/@techtalk931", "_blank");
+                document.getElementById("statusMsg").innerHTML = `
+          <div class="success">
+            <i class="fas fa-check-circle"></i> Registration successful! Ticket downloaded. Redirected to payment page.
+          </div>`;
+                setTimeout(closeModal, 3000);
+            } else {
+                // Free event: just send email and generate ticket
+                sendEmail(name, email, selectedEventName, phone);
+                generateTicket(name, email, selectedEventName, selectedEventPrice);
+                document.getElementById("statusMsg").innerHTML = `
+          <div class="success">
+            <i class="fas fa-check-circle"></i> Registration successful! Ticket downloaded. Check your email.
+          </div>`;
+                setTimeout(closeModal, 3000);
+            }
+
+            // Clear applied coupon
+            localStorage.removeItem('appliedCoupon');
+        });
+
+        // Initialize everything
+        loadUserData();
+        updateCountdowns();
+        setInterval(updateCountdowns, 60000); // Update countdown every minute
+
+        function updateEventStatsSummary() {
+            const cards = document.querySelectorAll('.event-card');
+            const eventCount = cards.length;
+            let totalSeats = 0;
+            cards.forEach(card => {
+                const seats = parseInt(card.getAttribute('data-seats')) || 0;
+                totalSeats += seats;
+            });
+            document.getElementById('eventStatsSummary').innerHTML =
+                `<span><i class='fas fa-list'></i> ${eventCount} Events</span>` +
+                `<span><i class='fas fa-users'></i> ${totalSeats} Total Seats</span>`;
+        }
+        document.addEventListener('DOMContentLoaded', updateEventStatsSummary);
+    </script>
+
+</body>
+
+</html>
